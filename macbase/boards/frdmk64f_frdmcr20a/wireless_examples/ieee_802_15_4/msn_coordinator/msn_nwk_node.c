@@ -23,6 +23,8 @@
 /* KSDK */
 #include "board.h"
 #include "fsl_os_abstraction.h"
+//#include "aes.h"
+#include "aes_wrapper.h"
 
 /************************************************************************************
  *************************************************************************************
@@ -56,7 +58,6 @@ enum
   errorInvalidParameter,
   errorNoScanResults
 };
-
 /************************************************************************************
  *************************************************************************************
  * Private prototypes
@@ -133,6 +134,7 @@ void main_task(uint32_t param)
 		LED_Init();
 		SecLib_Init();
 		SerialManager_Init();
+		AES_init(mac_transmit);
 		App_init();
 	}
 
@@ -296,6 +298,7 @@ void AppThread(uint32_t argument)
 			break;
 
 		case stateConnected:
+
 			/* Handle events from the UART */
 			if (ev & gAppEvtRxFromComm_c)
 			{
@@ -305,14 +308,22 @@ void AppThread(uint32_t argument)
 				if((received_byte >= ' ') && (received_byte <= '~')) {
 					maCommDataBuffer[mCounter++] = received_byte;
 				}
-
+				if(mCounter == 16)
+				{
+					/* Information ready to transmit, initializes encryption */
+					AES_Encrypt(mDestinationAddress,maCommDataBuffer, mCounter);
+					//Serial_PrintHex(mInterfaceId,maCommDataBuffer,mCounter , 0);
+					mCounter = 0;
+				}
+			}
+#if 0
 				if((mCounter >= 64) || (received_byte == '\r')){
 					mac_transmit(mDestinationAddress, maCommDataBuffer, mCounter);
 					FLib_MemSet(maCommDataBuffer, 0, 64);
 					mCounter = 0;
 				}
 			}
-
+#endif
 			/* Handle MAC management events */
 			if(ev & gAppEvtMacManagement_c){
 				Serial_Print(mInterfaceId,"Network management event: ", gAllowToBlock_d);
@@ -320,12 +331,14 @@ void AppThread(uint32_t argument)
 				Serial_Print(mInterfaceId,"\r\n", gAllowToBlock_d);
 			}
 
+
 			/* Handle MAC data events */
 			if(ev & gAppEvtMacData_c){
 				if(received_data_len){
 					Serial_Print(mInterfaceId,"Message from ", gAllowToBlock_d);
 					Serial_PrintHex(mInterfaceId,(uint8_t*)&received_data_src, 2, 0);
 					Serial_Print(mInterfaceId," : ", gAllowToBlock_d);
+					AES_Decrypt(received_data);
 					Serial_Print(mInterfaceId, received_data, gAllowToBlock_d);
 					Serial_Print(mInterfaceId,"\r\n", gAllowToBlock_d);
 				}
@@ -418,3 +431,5 @@ static void App_HandleKeys( key_event_t events )
 		break;
 	}
 }
+
+
