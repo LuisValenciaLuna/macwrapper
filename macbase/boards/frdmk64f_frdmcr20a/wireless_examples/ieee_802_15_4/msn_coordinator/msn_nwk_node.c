@@ -24,7 +24,7 @@
 #include "board.h"
 #include "fsl_os_abstraction.h"
 //#include "aes.h"
-#include "aes_wrapper.h"
+#include "safesecure.h"
 
 /************************************************************************************
  *************************************************************************************
@@ -134,7 +134,7 @@ void main_task(uint32_t param)
 		LED_Init();
 		SecLib_Init();
 		SerialManager_Init();
-		AES_init(mac_transmit);
+		SafeSecure_Init(mac_transmit);
 		App_init();
 	}
 
@@ -311,7 +311,7 @@ void AppThread(uint32_t argument)
 				if(mCounter == 16)
 				{
 					/* Information ready to transmit, initializes encryption */
-					AES_Encrypt(mDestinationAddress,maCommDataBuffer, mCounter);
+					SafeSecure_Encrypt(mDestinationAddress,maCommDataBuffer, mCounter);
 					//Serial_PrintHex(mInterfaceId,maCommDataBuffer,mCounter , 0);
 					mCounter = 0;
 				}
@@ -338,7 +338,7 @@ void AppThread(uint32_t argument)
 					Serial_Print(mInterfaceId,"Message from ", gAllowToBlock_d);
 					Serial_PrintHex(mInterfaceId,(uint8_t*)&received_data_src, 2, 0);
 					Serial_Print(mInterfaceId," : ", gAllowToBlock_d);
-					AES_Decrypt(received_data);
+					SafeSecure_Decrypt(received_data);
 					Serial_Print(mInterfaceId, received_data, gAllowToBlock_d);
 					Serial_Print(mInterfaceId,"\r\n", gAllowToBlock_d);
 				}

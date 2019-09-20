@@ -120,6 +120,7 @@
 									<listOptionValue builtIn="false" value="../../../../../../../../middleware/wireless/framework_5.0.5/SerialManager/Source/USB_VirtualCom"/>
 									<listOptionValue builtIn="false" value="../../../../../../../../devices/MK64F12"/>
 									<listOptionValue builtIn="false" value="../../../../../../../../devices/MK64F12/utilities"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/macbase/Extensions/safesecure}&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.933718024" name="Language standard" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std" useByScannerDiscovery="true" value="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.gnu99" valueType="enumerated"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.8634414631" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" useByScannerDiscovery="false" valueType="definedSymbols">
@@ -507,6 +508,9 @@
 	</storageModule>
 	<storageModule moduleId="scannerConfiguration">
 		<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.1792027861;ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.1792027861.;ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.435207489;ilg.gnuarmeclipse.managedbuild.cross.tool.cpp.compiler.input.1641695140">
+			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
+		</scannerConfigBuildInfo>
 		<scannerConfigBuildInfo instanceId="ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.1792027861;ilg.gnuarmeclipse.managedbuild.cross.config.elf.debug.1792027861.;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.1397207158;ilg.gnuarmeclipse.managedbuild.cross.tool.c.compiler.input.1895544709">
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>

@@ -32,6 +32,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>Extensions</name>
+			<type>2</type>
+			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
 			<name>board</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
@@ -65,6 +70,11 @@
 			<name>utilities</name>
 			<type>2</type>
 			<locationURI>virtual:/virtual</locationURI>
+		</link>
+		<link>
+			<name>Extensions/safesecure</name>
+			<type>2</type>
+			<location>C:/apps/macwrapper/macbase/middleware/safesecure</location>
 		</link>
 		<link>
 			<name>board/board.c</name>
