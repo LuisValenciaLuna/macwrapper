@@ -134,7 +134,7 @@ void main_task(uint32_t param)
 		LED_Init();
 		SecLib_Init();
 		SerialManager_Init();
-		SafeSecure_Init(mac_transmit);
+		SafeSecure_Init(mac_transmit, (ptrFnc_Receive)0, 118); // TODO: Modificar tamaño máximo
 		App_init();
 	}
 
@@ -311,7 +311,7 @@ void AppThread(uint32_t argument)
 				if(mCounter == 16)
 				{
 					/* Information ready to transmit, initializes encryption */
-					SafeSecure_Encrypt(mDestinationAddress,maCommDataBuffer, mCounter);
+					SafeSecure_Transmit(mDestinationAddress, maCommDataBuffer, mCounter);
 					//Serial_PrintHex(mInterfaceId,maCommDataBuffer,mCounter , 0);
 					mCounter = 0;
 				}
@@ -338,7 +338,7 @@ void AppThread(uint32_t argument)
 					Serial_Print(mInterfaceId,"Message from ", gAllowToBlock_d);
 					Serial_PrintHex(mInterfaceId,(uint8_t*)&received_data_src, 2, 0);
 					Serial_Print(mInterfaceId," : ", gAllowToBlock_d);
-					SafeSecure_Decrypt(received_data);
+					SafeSecure_Decrypt(received_data, received_data_len);
 					Serial_Print(mInterfaceId, received_data, gAllowToBlock_d);
 					Serial_Print(mInterfaceId,"\r\n", gAllowToBlock_d);
 				}

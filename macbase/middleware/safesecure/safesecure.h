@@ -1,15 +1,42 @@
 #include "board.h"
-#include "src/aes.h"
+#include "aes.h"
+#include "checksum.h"
 
-uint8_t key[] = { 0x2b, 0x7e, 0x15, 0x16, 0x28, 0xae, 0xd2, 0xa6, 0xab, 0xf7, 0x15, 0x88, 0x09, 0xcf, 0x4f, 0x3c };
-struct AES_ctx ctx;
+/*****************************
+/*  Type definition
+/*****************************/
 
-typedef void (* ptrFnc_Transmit)(uint16_t dest_address, uint8_t* data, uint8_t data_len);
-ptrFnc_Transmit pTransmit;
+typedef enum
+{
+	/* Transaction success */
+	SafeSecureTransmitMsg_Success,
 
-typedef void (* ptrFnc_Receive)(uint8_t* data);
-ptrFnc_Transmit pReceive;
+	/*  */
+	SafeSecureTransmitMsg_MaxSizeExceeded,
 
-extern void SafeSecure_Init(ptrFnc_Transmit p_Callbck);
-extern void SafeSecure_Encrypt(uint16_t dest_address, uint8_t* data, uint8_t data_len);
-void SafeSecure_Decrypt(uint8_t* data);
+} SafeSecureTransmitMsg_t;
+
+
+typedef enum
+{
+	/* Transaction OK */
+	SafeSecureReceiveMsg_Success,
+
+	/*  */
+	SafeSecureReceiveMsg_CurruptData,
+
+} SafeSecureReceiveMsg_t;
+
+
+typedef SafeSecureTransmitMsg_t (* ptrFnc_Transmit)(uint16_t dest_address, uint8_t* data, uint8_t data_len);
+
+typedef SafeSecureReceiveMsg_t (* ptrFnc_Receive)(uint8_t* data, uint8_t datalen);
+
+
+/*****************************
+/*  Functions
+/*****************************/
+
+extern void SafeSecure_Init(ptrFnc_Transmit p_Callback, ptrFnc_Receive p_RecCallback, uint8_t maxSizePkg);
+extern SafeSecureTransmitMsg_t SafeSecure_Transmit(uint16_t dest_address, uint8_t* data, uint8_t data_len);
+extern SafeSecureReceiveMsg_t  SafeSecure_Decrypt(uint8_t* data, uint8_t dataLen);

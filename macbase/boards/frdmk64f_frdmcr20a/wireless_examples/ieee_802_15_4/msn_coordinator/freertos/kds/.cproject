@@ -121,6 +121,7 @@
 									<listOptionValue builtIn="false" value="../../../../../../../../devices/MK64F12"/>
 									<listOptionValue builtIn="false" value="../../../../../../../../devices/MK64F12/utilities"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/macbase/Extensions/safesecure}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/macbase/Extensions/safesecure/include}&quot;"/>
 								</option>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.933718024" name="Language standard" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std" useByScannerDiscovery="true" value="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.std.gnu99" valueType="enumerated"/>
 								<option id="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs.8634414631" name="Defined symbols (-D)" superClass="ilg.gnuarmeclipse.managedbuild.cross.option.c.compiler.defs" useByScannerDiscovery="false" valueType="definedSymbols">
