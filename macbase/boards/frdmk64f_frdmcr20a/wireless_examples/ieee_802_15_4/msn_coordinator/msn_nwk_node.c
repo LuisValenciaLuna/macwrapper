@@ -25,6 +25,7 @@
 #include "fsl_os_abstraction.h"
 //#include "aes.h"
 #include "aes_wrapper.h"
+#include "crc_wrapper.h"
 
 /************************************************************************************
  *************************************************************************************
@@ -58,6 +59,17 @@ enum
   errorInvalidParameter,
   errorNoScanResults
 };
+
+#define BLOCK_LENGTH 16
+#define CRC_size 2
+uint8_t Initial_Data[] = {' ',' ',' ','P','R','A','C','T','I','C','A',' ','1',' ',' ',' ',0x00,0x00,\
+		'C','O','M','U','N','I','C','A','C','I','O','N','E','S',' ',' ',0x00,0x00,\
+		'V','A','L','E','N','C','I','A',' ','L','U','N','A',' ',' ',' ',0x00,0x00,\
+		'G','O','M','E','Z',' ','D','A','M','I','A','N',' ',' ',' ',' ',0x00,0x00,\
+		'R','O','S','A','S',' ','M','I','G','U','E','L',' ',' ',' ',' ',0x00,0x00,\
+		' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',0x00,0x00,\
+		' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',0x00,0x00,\
+		' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',0x00,0x00};
 /************************************************************************************
  *************************************************************************************
  * Private prototypes
@@ -134,7 +146,8 @@ void main_task(uint32_t param)
 		LED_Init();
 		SecLib_Init();
 		SerialManager_Init();
-		AES_init(mac_transmit);
+		AES_init(CRC_calculate);
+		CRC_Init(mac_transmit, AES_Decrypt);
 		App_init();
 	}
 
@@ -237,8 +250,11 @@ void mac_events_handler(void* evt_par)
 void AppThread(uint32_t argument)
 { 
 	osaEventFlags_t ev;
+	static uint8_t initialized = FALSE;
 	/* Stores the error/success code returned by some functions. */
     static uint8_t mCounter = 0;
+    static uint8_t Counter_Line = 0;
+    static uint8_t Data = 0;
 
 	while(1)
 	{
@@ -290,15 +306,26 @@ void AppThread(uint32_t argument)
 				Serial_Print(mInterfaceId," Channel: ", gAllowToBlock_d);
 				Serial_PrintHex(mInterfaceId,(uint8_t*)&mChannel, 1, 0);
 				Serial_Print(mInterfaceId,"\r\n", gAllowToBlock_d);
+				OSA_EventSet(mAppEvent, gAppEvtDummyEvent_c);
 
 				gState = stateConnected;
-				OSA_EventSet(mAppEvent, gAppEvtDummyEvent_c);
+
 			}
 
 			break;
 
 		case stateConnected:
 
+				if( (!initialized) && (!node_is_coordinator))
+				//while((!initialized))
+				{
+					for(Counter_Line = 0 ; Counter_Line <8 ; Counter_Line++)
+					{
+						AES_Encrypt(0xFFFF, &Initial_Data[Data], BLOCK_LENGTH);
+						Data += BLOCK_LENGTH + CRC_size;
+					}
+					initialized = TRUE;
+				}
 			/* Handle events from the UART */
 			if (ev & gAppEvtRxFromComm_c)
 			{
@@ -335,12 +362,19 @@ void AppThread(uint32_t argument)
 			/* Handle MAC data events */
 			if(ev & gAppEvtMacData_c){
 				if(received_data_len){
+					bool CRC_valid;
 					Serial_Print(mInterfaceId,"Message from ", gAllowToBlock_d);
 					Serial_PrintHex(mInterfaceId,(uint8_t*)&received_data_src, 2, 0);
 					Serial_Print(mInterfaceId," : ", gAllowToBlock_d);
-					AES_Decrypt(received_data);
-					Serial_Print(mInterfaceId, received_data, gAllowToBlock_d);
-					Serial_Print(mInterfaceId,"\r\n", gAllowToBlock_d);
+					CRC_valid = CRC_validate(received_data,received_data_len);
+					if(CRC_valid)
+					{
+						Serial_Print(mInterfaceId, received_data, gAllowToBlock_d);
+						Serial_Print(mInterfaceId,"\r\n", gAllowToBlock_d);
+					}
+					else{
+						Serial_Print(mInterfaceId,"CRC no valid, discard message \r\n", gAllowToBlock_d);
+					}
 				}
 				else {
 					Serial_Print(mInterfaceId,"Network data event: ", gAllowToBlock_d);

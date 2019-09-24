@@ -59,4 +59,6 @@ framework/FunctionLib \
 framework/Flash/Internal \
 drivers \
 board \
+Safe \
+CRC \
 

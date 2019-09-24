@@ -41,6 +41,8 @@ RM := rm -rf
 -include framework/Flash/Internal/subdir.mk
 -include drivers/subdir.mk
 -include board/subdir.mk
+-include Safe/subdir.mk
+-include CRC/subdir.mk
 -include subdir.mk
 -include objects.mk
 
@@ -104,7 +106,7 @@ clean:
 	-@echo ' '
 
 pre-build:
-	-arm-none-eabi-gcc -E -x c -P -Iinclude "E:/ITESO/kds_dscae_o2019/macbase/boards/frdmk64f_frdmcr20a/wireless_examples/ieee_802_15_4/msn_coordinator/freertos/kds/../../../../../../../middleware/wireless/framework_5.0.5/Common/devices/MK64F12/gcc/MK64FN1M0xxx12_connectivity.lld" -o "E:/ITESO/kds_dscae_o2019/macbase/boards/frdmk64f_frdmcr20a/wireless_examples/ieee_802_15_4/msn_coordinator/freertos/kds/MK64FN1M0xxx12_connectivity.ld"
+	-arm-none-eabi-gcc -E -x c -P -Iinclude "C:/WorkspaceKDS/macwrapper/macbase/boards/frdmk64f_frdmcr20a/wireless_examples/ieee_802_15_4/msn_coordinator/freertos/kds/../../../../../../../middleware/wireless/framework_5.0.5/Common/devices/MK64F12/gcc/MK64FN1M0xxx12_connectivity.lld" -o "C:/WorkspaceKDS/macwrapper/macbase/boards/frdmk64f_frdmcr20a/wireless_examples/ieee_802_15_4/msn_coordinator/freertos/kds/MK64FN1M0xxx12_connectivity.ld"
 	-@echo ' '
 
 secondary-outputs: $(SECONDARY_FLASH)

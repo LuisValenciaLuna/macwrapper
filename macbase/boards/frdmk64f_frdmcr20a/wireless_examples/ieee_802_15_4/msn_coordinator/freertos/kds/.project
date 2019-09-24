@@ -67,6 +67,51 @@
 			<locationURI>virtual:/virtual</locationURI>
 		</link>
 		<link>
+			<name>CRC/checksum.h</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/crc/checksum.h</locationURI>
+		</link>
+		<link>
+			<name>CRC/crc16.c</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/crc/crc16.c</locationURI>
+		</link>
+		<link>
+			<name>CRC/crc_wrapper.c</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/crc/crc_wrapper.c</locationURI>
+		</link>
+		<link>
+			<name>CRC/crc_wrapper.h</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/crc/crc_wrapper.h</locationURI>
+		</link>
+		<link>
+			<name>Safe/aes.c</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/aes/aes.c</locationURI>
+		</link>
+		<link>
+			<name>Safe/aes.h</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/aes/aes.h</locationURI>
+		</link>
+		<link>
+			<name>Safe/aes.hpp</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/aes/aes.hpp</locationURI>
+		</link>
+		<link>
+			<name>Safe/aes_wrapper.c</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/aes/aes_wrapper.c</locationURI>
+		</link>
+		<link>
+			<name>Safe/aes_wrapper.h</name>
+			<type>1</type>
+			<locationURI>PARENT-7-PROJECT_LOC/aes/aes_wrapper.h</locationURI>
+		</link>
+		<link>
 			<name>board/board.c</name>
 			<type>1</type>
 			<locationURI>PARENT-1-PROJECT_LOC/board.c</locationURI>
